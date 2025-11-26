@@ -7,7 +7,7 @@
     "build": "npx tsc",
     "start": "npm run build && node build/app.js",
     "dev": "LOG_LEVEL=info npx nodemon",
-    "test": "npx jest",
+    "test": "vitest",
     "lint": "eslint . --ext .ts"
   },
   "author": "",
@@ -19,10 +19,8 @@
     "@types/log": "^6.3.3",
     "@types/node": "^24.9.2",
     "@types/ws": "^8.18.1",
-    "jest": "^30.2.0",
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
-    "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },
