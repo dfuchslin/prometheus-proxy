@@ -1,8 +1,3 @@
-
-// import * as ws from './clients/websocket';
-
-// ws.connect();
-
 import { serve, type ServerType } from '@hono/node-server';
 import { logger as honoLogger } from 'hono/logger';
 import { compress } from 'hono/compress';
@@ -10,11 +5,9 @@ import logger from './lib/logger.js';
 import { config } from './config.js';
 import health from './routes/health.js';
 import { Hono } from 'hono';
-import { prometheus } from '@hono/prometheus';
+import { printMetrics, registerMetrics } from './services/metrics.js';
 
 const app = new Hono();
-
-const { printMetrics, registerMetrics } = prometheus();
 
 app.use('*', registerMetrics);
 app.use(compress());

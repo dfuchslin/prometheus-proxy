@@ -5,7 +5,7 @@
   "type": "module",
   "main": "build/index.js",
   "scripts": {
-    "dev": "LOG_LEVEL=info tsx watch src/index.ts",
+    "dev": "LOG_LEVEL=debug tsx watch src/index.ts",
     "build": "npx tsc",
     "start": "node dist/index.js",
     "test": "vitest run",

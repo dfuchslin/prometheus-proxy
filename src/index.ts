@@ -1,7 +1,8 @@
 import { startServer, stopServer } from './app.js';
+import * as nad from './clients/nadwebsocket.js';
 import logger from './lib/logger.js';
 
-Promise.all([startServer()])
+Promise.all([startServer(), nad.connect()])
   .catch(async (err) => {
     logger.error(err);
     await missionAbort(1);
