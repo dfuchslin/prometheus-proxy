@@ -1,23 +1,23 @@
 import WebSocket from 'ws';
-import { config } from '../config';
+import { config } from '../config.js';
 
-class NADWebSocket {
-
-  private readonly url: string;
-  private socket?: WebSocket;
-
-  constructor(url: string) {
-    this.url = url;
-  }
-
-  connect() {
-    this.socket = new WebSocket(this.url);
-    this.socket.on('open', () => {
-      //this.socket.send('Main?');
-    });
-  }
-
-}
+// class NADOSDWebSocket {
+//
+//   private readonly url: string;
+//   private socket?: WebSocket;
+//
+//   constructor(url: string) {
+//     this.url = url;
+//   }
+//
+//   connect() {
+//     this.socket = new WebSocket(this.url);
+//     this.socket.on('open', () => {
+//       //this.socket.send('Main?');
+//     });
+//   }
+//
+// }
 
 export const connect = () => {
   const ws = new WebSocket(`ws://${config.nad.host}:${config.nad.port}/`)

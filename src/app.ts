@@ -1,20 +1,46 @@
-import Koa from 'koa';
-import json from 'koa-json';
-import Logger from './lib/log';
-import { config } from './config';
-import health from './routes/health';
-import * as ws from './clients/websocket';
 
-const namespace = 'api';
-const log = Logger.get(namespace);
-const app = new Koa();
-const port = config.api.port;
+// import * as ws from './clients/websocket';
 
-app.use(json());
-app.use(health.routes()).use(health.allowedMethods());
+// ws.connect();
 
-app.listen(port, () => {
-  log.notice(`API server started on port ${port}`);
-});
+import { serve, type ServerType } from '@hono/node-server';
+import { logger as honoLogger } from 'hono/logger';
+import { compress } from 'hono/compress';
+import logger from './lib/logger.js';
+import { config } from './config.js';
+import health from './routes/health.js';
+import { Hono } from 'hono';
+import { prometheus } from '@hono/prometheus';
 
-ws.connect();
+const app = new Hono();
+
+const { printMetrics, registerMetrics } = prometheus();
+
+app.use('*', registerMetrics);
+app.use(compress());
+app.use(honoLogger());
+
+app.route('/', health);
+app.get('/metrics', printMetrics);
+
+let server: ServerType | null;
+
+export const startServer = () => {
+  server = serve(
+    {
+      fetch: app.fetch,
+      port: config.api.port,
+    },
+    (info) => {
+      logger.info(`Listening on port ${info.port}`);
+    },
+  );
+};
+
+export const stopServer = () => {
+  if (server) {
+    server.close();
+    server = null;
+    logger.info('Server shut down');
+  }
+};

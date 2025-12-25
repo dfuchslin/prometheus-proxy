@@ -1,15 +1,13 @@
-import Router from '@koa/router';
+import { Hono } from 'hono';
 
-const router = new Router();
+const router = new Hono();
 
-router.get('/', async (ctx, next) => {
-  ctx.body = 'ok';
-  await next();
+router.get('/', (c) => {
+  return c.text('ok');
 });
 
-router.get('/health', async (ctx, next) => {
-  ctx.body = 'ok computer';
-  await next();
+router.get('/health', (c) => {
+  return c.text('ok computer');
 });
 
 export default router;
