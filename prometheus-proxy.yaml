@@ -1,0 +1,19 @@
+apiVersion: homelab.local/v1alpha1
+kind: BuildRequest
+metadata:
+  name: prometheus-proxy-build
+  namespace: prometheus-proxy
+spec:
+  repo: git@github.com:dfuchslin/prometheus-proxy.git
+  branch: main
+  gitSecretRef:
+    name: prometheus-proxy-github-deploy-key
+  image:
+    name: registry:5000/prometheus-proxy
+    tagStrategy: latest
+  deploy:
+    targetRef:
+      apiVersion: apps/v1
+      kind: Deployment
+      name: prometheus-proxy
+      container: prometheus-proxy

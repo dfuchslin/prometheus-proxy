@@ -1,3 +1,3 @@
-.fleet
+data*
+dist
 node_modules
-build

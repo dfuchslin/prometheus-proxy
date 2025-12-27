@@ -1,7 +1,12 @@
 import WebSocket, { type RawData } from 'ws';
 import { config } from '../config.js';
 import logger from '../lib/logger.js';
-import { audioAmplifierTemperature } from '../services/metrics.js';
+import {
+  audioAmplifierFan,
+  audioAmplifierPower,
+  audioAmplifierTemperature,
+  audioAmplifierVolume,
+} from '../services/metrics.js';
 
 let ws: WebSocket | null = null;
 let reconnectTimer: NodeJS.Timeout | null = null;
@@ -52,16 +57,32 @@ const processMessage = (rawData: RawData) => {
   const data = rawData.toString().replace(/\r/g, '').replace(/\n/g, '');
   logger.debug(`WebSocket received: ${data}`);
 
-  const name = config.nad.name;
+  const id = config.nad.name;
   const [ key, value ] = data.split('=');
 
   if (key.startsWith('Main.Temp.')) {
     const location = key.toLowerCase().split('.')[2]
-    audioAmplifierTemperature.labels(name, location).set(toNumber(value));
+    audioAmplifierTemperature.labels({ id, location }).set(toNumber(value));
   }
+
   if (key === 'Main.Fan.Status') {
     // Main.Fan.Status=1300,1300,OK
     // requested, actual, status
+    const [requested, actual, _] = value.split(',');
+    audioAmplifierFan.labels({ id, type: 'requested' }).set(toNumber(requested));
+    audioAmplifierFan.labels({ id, type: 'actual' }).set(toNumber(actual));
+  }
+  if (key === 'Main.Power') {
+    const power = value === 'On' ? 1 : value === 'Off' ? 0 : undefined;
+    if (power !== undefined) {
+      audioAmplifierPower.labels({ id }).set(power);
+    } else {
+      logger.warn(`WebSocket received unknown power value ${key}=${value}`);
+    }
+  }
+
+  if (key === 'Main.Volume') {
+    audioAmplifierVolume.labels({ id }).set(toNumber(value));
   }
 }
 
