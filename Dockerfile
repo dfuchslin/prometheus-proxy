@@ -1,4 +1,4 @@
-FROM node:24-alpine AS build
+FROM public.ecr.aws/docker/library/node:24-alpine AS build
 WORKDIR /app
 
 COPY package*.json /app
@@ -10,7 +10,7 @@ RUN npm run build
 RUN npm prune --omit=dev
 
 
-FROM node:24-alpine AS runner
+FROM public.ecr.aws/docker/library/node:24-alpine AS runner
 WORKDIR /app
 
 COPY --from=build /app/dist /app/dist
