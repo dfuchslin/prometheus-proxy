@@ -5,7 +5,7 @@ dotenv.config({ quiet: true });
 
 export const config = {
   api: {
-    port: env.get('API_PORT').default('3000').asInt(),
+    port: env.get('SERVICE_PORT').default('3000').asInt(),
   },
   nad: {
     name: env.get('NAD_NAME').default('t778').asString(),
