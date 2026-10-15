@@ -58,10 +58,10 @@ const processMessage = (rawData: RawData) => {
   logger.debug(`WebSocket received: ${data}`);
 
   const id = config.nad.name;
-  const [ key, value ] = data.split('=');
+  const [key, value] = data.split('=');
 
   if (key.startsWith('Main.Temp.')) {
-    const location = key.toLowerCase().split('.')[2]
+    const location = key.toLowerCase().split('.')[2];
     audioAmplifierTemperature.labels({ id, location }).set(toNumber(value));
   }
 
@@ -84,13 +84,12 @@ const processMessage = (rawData: RawData) => {
   if (key === 'Main.Volume') {
     audioAmplifierVolume.labels({ id }).set(toNumber(value));
   }
-}
+};
 
 const toNumber = (value: string) => {
   const num = Number(value);
   return isNaN(num) ? 0 : num;
-}
-
+};
 
 /*
 ● WebSocket received: Main.Model=T778

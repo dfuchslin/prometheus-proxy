@@ -2,11 +2,10 @@ import { startServer, stopServer } from './app.ts';
 import * as nad from './clients/nadwebsocket.ts';
 import logger from './lib/logger.ts';
 
-Promise.all([startServer(), nad.connect()])
-  .catch(async (err) => {
-    logger.error(err);
-    await missionAbort(1);
-  });
+Promise.all([startServer(), nad.connect()]).catch(async (err) => {
+  logger.error(err);
+  await missionAbort(1);
+});
 
 const missionAbort = async (signal = 0) => {
   stopServer();

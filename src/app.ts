@@ -26,7 +26,7 @@ export const startServer = () => {
     },
     (info) => {
       logger.info(`Listening on port ${info.port}`);
-    },
+    }
   );
 };
 
