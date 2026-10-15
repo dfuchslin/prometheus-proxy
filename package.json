@@ -28,7 +28,6 @@
   "dependencies": {
     "@hono/node-server": "^2.1.5",
     "@hono/prometheus": "^1.0.3",
-    "env-var": "^7.5.0",
     "hono": "^4.13.13",
     "log": "^6.3.2",
     "log-node": "^8.0.3",

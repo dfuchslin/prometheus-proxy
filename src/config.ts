@@ -1,12 +1,20 @@
-import env from 'env-var';
+const str = (name: string, fallback: string): string => process.env[name] || fallback;
+
+const int = (name: string, fallback: number): number => {
+  const raw = process.env[name];
+  if (raw === undefined || raw === '') return fallback;
+  const n = Number(raw);
+  if (!Number.isInteger(n)) throw new Error(`${name} must be an integer, got "${raw}"`);
+  return n;
+};
 
 export const config = {
   api: {
-    port: env.get('SERVICE_PORT').default('3000').asInt(),
+    port: int('SERVICE_PORT', 3000),
   },
   nad: {
-    name: env.get('NAD_NAME').default('t778').asString(),
-    host: env.get('NAD_HOST').default('nad.local').asString(),
-    port: env.get('NAD_PORT').default('8585').asInt(),
+    name: str('NAD_NAME', 't778'),
+    host: str('NAD_HOST', 'nad.local'),
+    port: int('NAD_PORT', 8585),
   },
 };
