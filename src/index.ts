@@ -1,6 +1,6 @@
-import { startServer, stopServer } from './app.js';
-import * as nad from './clients/nadwebsocket.js';
-import logger from './lib/logger.js';
+import { startServer, stopServer } from './app.ts';
+import * as nad from './clients/nadwebsocket.ts';
+import logger from './lib/logger.ts';
 
 Promise.all([startServer(), nad.connect()])
   .catch(async (err) => {

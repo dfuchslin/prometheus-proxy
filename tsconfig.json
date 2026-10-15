@@ -7,7 +7,10 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "types": ["node"],
+    "rootDir": "src",
     "outDir": "dist",
+    "rewriteRelativeImportExtensions": true,
+    "erasableSyntaxOnly": true,
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

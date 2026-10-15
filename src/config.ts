@@ -1,7 +1,4 @@
-import dotenv from 'dotenv';
 import env from 'env-var';
-
-dotenv.config({ quiet: true });
 
 export const config = {
   api: {

@@ -1,12 +1,12 @@
 import WebSocket, { type RawData } from 'ws';
-import { config } from '../config.js';
-import logger from '../lib/logger.js';
+import { config } from '../config.ts';
+import logger from '../lib/logger.ts';
 import {
   audioAmplifierFan,
   audioAmplifierPower,
   audioAmplifierTemperature,
   audioAmplifierVolume,
-} from '../services/metrics.js';
+} from '../services/metrics.ts';
 
 let ws: WebSocket | null = null;
 let reconnectTimer: NodeJS.Timeout | null = null;

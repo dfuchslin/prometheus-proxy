@@ -1,11 +1,11 @@
 import { serve, type ServerType } from '@hono/node-server';
 import { logger as honoLogger } from 'hono/logger';
 import { compress } from 'hono/compress';
-import logger from './lib/logger.js';
-import { config } from './config.js';
-import health from './routes/health.js';
+import logger from './lib/logger.ts';
+import { config } from './config.ts';
+import health from './routes/health.ts';
 import { Hono } from 'hono';
-import { printMetrics, registerMetrics } from './services/metrics.js';
+import { printMetrics, registerMetrics } from './services/metrics.ts';
 
 const app = new Hono();
 
